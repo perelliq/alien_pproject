@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Список Сообщений {% endblock %}</h1>
+<hr>
+
+{% for post in posts %}
+
+<table>
+    <tr>
+        <td><img src="{{ url_for('static', filename='img/voronoi.png') }}" width="64" height="64" alt="Edit"></td>
+        <td><a href="{{ url_for('post', post_id=post['id']) }}">
+            <h3>{{ post['title'] }}</h3>
+        </a></td>
+
+        <td><a href="{{ url_for('edit', id=post['id']) }}">
+            <img src="{{ url_for('static', filename='img/pencil.png') }}" width="32" height="32" alt="Edit">
+        </a></td>
+
+    </tr>
+</table>
+<span class="badge badge-light">{{ post['created'] }}</span>
+<hr>
+
+{% endfor %}
+{% endblock %}
