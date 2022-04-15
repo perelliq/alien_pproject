@@ -8,16 +8,16 @@ with open('schema.sql') as f:
 
 cur = connection.cursor()
 
-cur.execute("INSERT INTO posts (title, content) VALUES (?, ?)",
-            ('First Post', 'Content for the first post')
+cur.execute("INSERT INTO posts (title, content, image) VALUES (?, ?, ?)",
+            ('First Post', 'Content for the first post', 'voronoi_1.png')
             )
 
-cur.execute("INSERT INTO posts (title, content) VALUES (?, ?)",
-            ('Second Post', 'Content for the second post')
+cur.execute("INSERT INTO posts (title, content, image) VALUES (?, ?, ?)",
+            ('Second Post', 'Content for the second post', 'voronoi_1.png')
             )
 
-cur.execute("INSERT INTO posts (title, content) VALUES (?, ?)",
-            ('Third Post', 'Content for the second post')
+cur.execute("INSERT INTO posts (title, content, image) VALUES (?, ?, ?)",
+            ('Third Post', 'Content for the second post', 'voronoi_1.png')
             )
 
 connection.commit()

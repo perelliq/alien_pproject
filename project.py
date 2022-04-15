@@ -3,6 +3,8 @@ from flask import Flask, render_template, request, url_for, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.exceptions import abort
 
+from makepic import make_hash, save_pic
+
 db = SQLAlchemy()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'lemur_2112'
@@ -44,13 +46,17 @@ def create():
     if request.method == 'POST':
         title = request.form['title']
         content = request.form['content']
+        file_hash = make_hash(content)
+        image = "img/" + file_hash + ".png"
+        print(file_hash)
+        save_pic(file_hash)
 
         if not title:
             flash('Заголовок сообщения обязателен!')
         else:
             conn = get_db_connection()
-            conn.execute('INSERT INTO posts (title, content) VALUES (?, ?)',
-                         (title, content))
+            conn.execute('INSERT INTO posts (title, content, image) VALUES (?, ?, ?)',
+                         (title, content, image))
             conn.commit()
             conn.close()
             return redirect(url_for('index'))
@@ -65,6 +71,7 @@ def edit(id):
     if request.method == 'POST':
         title = request.form['title']
         content = request.form['content']
+
 
         if not title:
             flash('Заголовок сообщения обязателен!')

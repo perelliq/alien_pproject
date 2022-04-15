@@ -7,10 +7,12 @@ from scipy.spatial import Voronoi
 
 import random
 
+random.seed(40)
 SIZE = 400
 POINTS = random.randint(2, 100)
+COLORS = ["e0b0ff", "9999ff", "f78fa7", "ff4e33", "ffa742", "d1cd4d"]
 
-# random.seed(40)
+
 points = [[random.randrange(SIZE), random.randrange(SIZE)]
           for i in range(POINTS)]
 points.append([-SIZE * 3, -SIZE * 3])
@@ -20,14 +22,18 @@ points.append([SIZE * 4, SIZE * 4])
 
 
 def draw(ctx, pixel_width, pixel_height, frame_no, frame_count):
-    setup(ctx, pixel_width, pixel_height, background=Color(1))
+    setup(ctx, pixel_width, pixel_height, background=Color(random.random()))
     voronoi = Voronoi(points)
     voronoi_vertices = voronoi.vertices
 
     for region in voronoi.regions:
         if -1 not in region:
-            polygon = [voronoi_vertices[p] for p in region]
-            Polygon(ctx).of_points(polygon).stroke(line_width=2)
+            l = random.randint(0, 8)
+            polygon = [voronoi_vertices[i] for i in region]
+            ctx.set_source_rgba(random.random(), random.random(), random.random())
+            ctx.fill()
+            Polygon(ctx).of_points(polygon).stroke(line_width=l,
+                                                   pattern=Color(random.random(), random.random(), random.random()))
 
 
 def make_hash(name):
@@ -36,4 +42,6 @@ def make_hash(name):
     return hash_string
 
 
-make_image("static/img/voronoi_1.png", draw, SIZE, SIZE)
+def save_pic(name):
+    image = "static/img/" + name + ".png"
+    make_image(image, draw, SIZE, SIZE)
