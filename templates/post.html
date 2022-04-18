@@ -1,7 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>{% block title %} {{ post['title'] }} {% endblock %}</h2>
-    <span class="badge badge-primary">{{ post['created'] }}</span>
-    <p>{{ post['content'] }}</p>
-{% endblock %}
+<h2 align="center">{% block title %} {{ post['title'] }} {% endblock %}</h2>
+<span class="badge badge-primary">{{ post['created'] }}</span>
+<p align="center"><big>{{ post['content'] }}</big></p>
+
+<div align="center">
+
+
+<tr >
+    <td><img src="{{ url_for('static', filename=post['image']) }}" width="400" height="400" align="center"></td>
+</tr>
+<br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+<br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+    {% endblock %}
+</div>

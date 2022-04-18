@@ -9,9 +9,9 @@
 
     <title>{% block title %} {% endblock %}</title>
 </head>
-<body class="body bg-light">
+<body class="body bg-light" background="static/img/bg_1.png" >
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-    <a class="navbar-brand" href="{{ url_for('index')}}">Мега-блог</a>
+    <a class="navbar-brand" href="{{ url_for('index')}}">Ино-блог</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -21,19 +21,21 @@
             <li class="nav-item active">
                 <a class="nav-link" href="about">О Проекте</a>
             </li>
+            {% if not current_user.is_anonymous %}
             <li class="nav-item">
                 <a class="nav-link" href="{{url_for('create')}}">Новое сообщение</a>
             </li>
+            {% endif %}
         </ul>
     </div>
-    <div class="login-container">
-        <form action="/action_page.php">
-            <input type="text" placeholder="Ник" name="username">
-            <input type="text" placeholder="Пароль" name="psw">
-            <button type="submit">Login</button>
-        </form>
-    </div>
+    {% if current_user.is_anonymous %}
+    <a class="nav-link" style="color:#FFFFFF" href="{{ url_for('reg') }}">Зарегистрироваться</a>
+    <a class="nav-link" style="color:#FFFFFF" href="{{ url_for('login') }}">Войти</a>
+    {% else %}
+    <a style="color:#FFFFFF" href="{{ url_for('logout') }}">Выйти</a>
+    {% endif %}
 </nav>
+
 <div class="container bg-light">
     {% block content %} {% endblock %}
 </div>
