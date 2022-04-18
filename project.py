@@ -309,7 +309,7 @@ def logout():
 @login_required
 def user(username):
     conn = get_db_connection()
-    posts = conn.execute('SELECT * FROM post WHERE username = ?',(username,) ).fetchall()
+    posts = conn.execute('SELECT * FROM post WHERE username = ?', (username,)).fetchall()
     conn.close()
     return render_template('user.html', posts=posts, user=username,
                            len_posts=len(posts))
