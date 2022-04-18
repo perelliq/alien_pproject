@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 align="center">Пользователь: {{ user }}</h1>
+<h2 align="center">История</h2>
+<br> <br>
+{% if len_posts > 0%}
+{% for post in posts %}
+
+<p><big>
+    <b>{{ post.content }}: </b> {{ post.stamp }}
+</big>
+</p>
+{% endfor %}
+
+{% else %}
+<p align="center"><big>
+    Пока нет постов
+</big></p>
+{% endif %}
+
+<br> <br> <br> <br> <br> <br> <br> <br>
+
+{% if len_posts > 0%}
+<h1 align="center">Галерея пользователя {{ user }}</h1>
+<br> <br>
+{% for post in posts %}
+
+<img src="{{ url_for('static', filename=post['image']) }}" width="180" height="180">
+<!--        <td><p>{{ post['content'] }}</p></td>-->
+{% endfor %}
+{% endif %}
+
+<br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+<br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+
+{% endblock %}
