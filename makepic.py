@@ -8,8 +8,8 @@ from scipy.spatial import Voronoi
 import random
 
 random.seed(40)
-SIZE = 4000
-POINTS = random.randint(8000, 8500)
+SIZE = 3000
+POINTS = random.randint(3000, 3500)
 COLORS = ["e0b0ff", "9999ff", "f78fa7", "ff4e33", "ffa742", "d1cd4d"]
 
 points = [[random.randrange(SIZE), random.randrange(SIZE)]
@@ -27,12 +27,14 @@ def draw(ctx, pixel_width, pixel_height, frame_no, frame_count):
 
     for region in voronoi.regions:
         if -1 not in region:
-            l = random.randint(2, 8)
+            color = random.random()
+            l = random.randint(10, 20)
             polygon = [voronoi_vertices[i] for i in region]
-            ctx.set_source_rgba(random.random(), random.random(), random.random(), 0.7)
+            ctx.set_source_rgba(color, color, color, 0.9)
             ctx.fill()
-            Polygon(ctx).of_points(polygon).stroke(line_width=0,
-                                                   pattern=Color(random.random(), random.random(), random.random(), 0.3))
+            Polygon(ctx).of_points(polygon).stroke(line_width=l,
+                                                   pattern=Color(color, color, color,
+                                                                 0.8))
 
 
 def make_hash(name):
@@ -46,4 +48,4 @@ def save_pic(name):
     make_image(image, draw, SIZE, SIZE)
 
 
-save_pic("bg_1")
+save_pic("bg_2")

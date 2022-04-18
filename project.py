@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, url_for, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.exceptions import abort
-from flask_login import LoginManager, logout_user
+from flask_login import LoginManager, logout_user, login_required
 from flask_login import current_user, login_user
 from generativepy.drawing import make_image, setup
 from generativepy.geometry import Polygon
@@ -47,6 +47,9 @@ class User(UserMixin, db.Model):
         return '<User {}>'.format(self.username)
 
     def get_name(self):
+        return self.username
+
+    def get_name_from_id(self, user_id):
         return self.username
 
 
@@ -300,6 +303,16 @@ def logout():
     logout_user()
     print("Logged out")
     return redirect(url_for('index'))
+
+
+@app.route('/user/<username>')
+@login_required
+def user(username):
+    conn = get_db_connection()
+    posts = conn.execute('SELECT * FROM post WHERE username = ?',(username,) ).fetchall()
+    conn.close()
+    return render_template('user.html', posts=posts, user=username,
+                           len_posts=len(posts))
 
 
 @app.route('/reg', methods=['GET', 'POST'])
